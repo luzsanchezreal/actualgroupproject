@@ -13,9 +13,6 @@ from scipy.sparse.linalg import inv
 from scipy.sparse import eye, diags
 import matplotlib.animation as animation
 
-#input: V, output: psi
-
-#calculation of schrodingers eqn according to t:
 
 # Input parameters
 Nx = 500
@@ -33,7 +30,12 @@ x_array = np.linspace(xmin, xmax, Nx)
 t_array = np.linspace(tmin, tmax, Nt)
 
 
-#arbitrarily defining V so i have something to work with; actual values will later be determined by use input
+'''
+READ BEFORE INPUTTING POTENTIALS
+When inpuuting own potentials usie the variable x_array
+Numpy packages can be used to form a string as the potential
+'''
+
 def V():
       String = str(input("Whats  your potential?\n"))
       command = """def f(x): 
