@@ -32,7 +32,7 @@ t_array = np.linspace(tmin, tmax, Nt)
 
 '''
 READ BEFORE INPUTTING POTENTIALS
-When inpuuting own potentials usie the variable x_array
+When inpuuting own potentials use the variable x_array
 Numpy packages can be used to form a string as the potential
 '''
 
@@ -46,27 +46,28 @@ def V():
 
 
 
-# Converting V to a diagonal matrix
+'''
+Coverting V into a Daiognal matrix and calculating small psi
+'''
 Vmatrix = diags(V())
-
-
-#calculation of small psi
 psi = np.exp(-(x_array+2)**2)
 
-# Calculating deltat, deltax
 dt = t_array[1] - t_array[0]
 dx = x_array[1] - x_array[0]
 
-
-# Find H
 H = -0.5 * FinDiff(0, dx, 2).matrix(x_array.shape) + Vmatrix
 
+'''
+Apply boundary conditions to the Hamiltonian
+'''
 
-# Apply boundary conditions to the Hamiltonian
 H[0, :] = H[-1, :] = 0
 H[0, 0] = H[-1, -1] = 1
 
-# Calculate U
+'''
+Calculating U
+'''
+
 I_plus = eye(Nx) + 1j * dt / 2. * H
 I_minus = eye(Nx) - 1j * dt / 2. * H
 U = inv(I_minus).dot(I_plus)
