@@ -37,6 +37,12 @@ When inpuuting own potentials use the variable x_array
 Numpy packages can be used to form a string as the potential
 '''
 
+'''
+Defining a function to be returned as the default potential 
+'''
+def f(x_array):
+    return x_array**2
+
 def V():
       String = str(input("Please input potential\n"))
       command = """def f(x):
@@ -46,8 +52,8 @@ def V():
       
       return f(x_array)
 
-
 VV = V()
+
 
 '''
 Coverting V into a Daiognal matrix and calculating small psi
