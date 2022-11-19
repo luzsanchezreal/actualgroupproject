@@ -6,6 +6,7 @@ Created on Sat Nov 12 19:14:06 2022
 @author: charlotteharrison
 """
 
+
 import numpy as np
 import matplotlib.pyplot as plt
 from findiff import FinDiff
@@ -23,7 +24,7 @@ xmax = 5
 Nt = 500
 tmin = 0
 tmax = 60
-k = 1 
+k = 1
 
 # Calculate grid, potential, and initial wave function
 x_array = np.linspace(xmin, xmax, Nx)
@@ -37,19 +38,21 @@ Numpy packages can be used to form a string as the potential
 '''
 
 def V():
-      String = str(input("Whats  your potential?\n"))
-      command = """def f(x): 
+      String = str(input("Please input potential\n"))
+      command = """def f(x):
           return """ + String
+      
       exec(command, globals())
       
       return f(x_array)
 
 
+VV = V()
 
 '''
 Coverting V into a Daiognal matrix and calculating small psi
 '''
-Vmatrix = diags(V())
+Vmatrix = diags(VV)
 psi = np.exp(-(x_array+2)**2)
 
 dt = t_array[1] - t_array[0]
@@ -87,7 +90,7 @@ ax.set_xlabel("x [arb units]")
 ax.set_ylabel("$|\Psi(x, t)|$", color="C0")
 
 ax_twin = ax.twinx()
-ax_twin.plot(x_array, V(), color="C1")
+ax_twin.plot(x_array, VV, color="C1")
 ax_twin.set_ylabel("V(x) [arb units]", color="C1")
 
 line, = ax.plot([], [], color="C0", lw=2)
