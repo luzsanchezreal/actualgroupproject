@@ -24,7 +24,7 @@ xmax = 5
 Nt = 500
 tmin = 0
 tmax = 60
-k = 1
+
 
 # Calculate grid, potential, and initial wave function
 x_array = np.linspace(xmin, xmax, Nx)
