@@ -56,7 +56,7 @@ VV = V()
 
 
 '''
-Coverting V into a Daiognal matrix and calculating small psi
+Converting V into a Daiognal matrix and calculating small psi
 '''
 Vmatrix = diags(VV)
 psi = np.exp(-(x_array+2)**2)
