@@ -19,7 +19,7 @@ import matplotlib.animation as animation
 Nx = 500
 
 #defining space & time variables
-NT = Nx
+Nt = Nx
 xmin = -5
 xmax = 5
 tmin = 0
