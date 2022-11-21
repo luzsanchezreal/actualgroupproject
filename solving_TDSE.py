@@ -9,7 +9,6 @@ Created on Sat Nov 12 19:14:06 2022
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from numpy import savetxt
 from findiff import FinDiff
 from scipy.sparse.linalg import inv
 from scipy.sparse import eye, diags
@@ -17,12 +16,11 @@ import matplotlib.animation as animation
 
 
 # Input parameters
-Nx = 500
+Nx = NT = 500
 
 #defining space & time variables
 xmin = -5
 xmax = 5
-Nt = Nx
 tmin = 0
 tmax = 60
 
