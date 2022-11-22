@@ -21,7 +21,7 @@ Nx = 250
 #defining space & time variables
 xmin = -5
 xmax = 5
-Nt = 250
+Nt = 100
 tmin = 0
 tmax = 60
 
@@ -103,25 +103,61 @@ for t in t_array:
 
 
 """
-Creates a Data file
+Creates a Data file 
 """
 
-while True:
+def download_data(Nx=500, xmin=-5, xmax=5, tmin=0, tmax=20, V_x='x**2'):
 
-    data_input = input("\nWould you like to download a csv file of the data? (y/n)")
-    if data_input == 'y':
-        Nt = Nx
-        df = pd.DataFrame({'x': x_array, 'psi': psi_list})
-        df.to_csv('psi_data.csv')
-        print("\nData has been downloaded.")
-        break
-    elif data_input ==  'n':
-        print("\nNo download chosen. ")
-        break   
-    else:
-        print("\nInvalid response.")
-        print("Please enter... y (yes for download) or n (no download).")
+    # Calculate grid, and initial wave function
+    Nt = Nx
+    x = x_array
+    x = np.linspace(xmin, xmax, Nx)
+    t_array = np.linspace(tmin, tmax, Nt)
+    psi = np.exp(-(x+2)**2)
 
+    # Calculate finite difference elements
+    dt = t_array[1] - t_array[0]
+    dx = x[1] - x[0]
+
+    # Put V(x) array values into the diagonal elements of an empty matrix
+    V_x_matrix = diags(VV)
+
+    # Calculate the Hamiltonian matrix
+    H = -0.5 * FinDiff(0, dx, 2).matrix(x.shape) + V_x_matrix
+
+    # Apply boundary conditions to the Hamiltonian
+    H[0, :] = H[-1, :] = 0
+    H[0, 0] = H[-1, -1] = 1
+
+    # Calculate U
+    I_plus = eye(Nx) + 1j * dt / 2. * H
+    I_minus = eye(Nx) - 1j * dt / 2. * H
+    U = inv(I_minus).dot(I_plus)
+
+    # Iterate over each time, appending each calculation of psi to a list
+    psi_list = []
+    for t in t_array:
+        psi = U.dot(psi)
+        psi[0] = psi[-1] = 0
+        psi_list.append(np.abs(psi))
+
+    while True:
+        data_input = input("\nWould you like to download a csv file of the data? (y/n)")
+        if data_input == 'y':
+
+            df = pd.DataFrame({'x': x, 'psi': psi_list})
+            df.to_csv('psi_data.csv')
+            print("\nData has been downloaded.")
+            break
+        elif data_input ==  'n':
+            print("\nNo download chosen. ")
+            break   
+        else:
+            print("\nInvalid response.")
+            print("Please enter... y (yes for download) or n (no download).")
+
+
+download_data(Nx, xmin, xmax, tmin, tmax, V_x=VV)
 
 
 """
