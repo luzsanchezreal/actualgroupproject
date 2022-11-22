@@ -110,7 +110,6 @@ def download_data(Nx=500, xmin=-5, xmax=5, tmin=0, tmax=20, V_x='x**2'):
 
     # Calculate grid, and initial wave function
     Nt = Nx
-    x = x_array
     x = np.linspace(xmin, xmax, Nx)
     t_array = np.linspace(tmin, tmax, Nt)
     psi = np.exp(-(x+2)**2)
