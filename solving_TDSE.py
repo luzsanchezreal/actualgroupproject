@@ -16,12 +16,12 @@ import matplotlib.animation as animation
 
 
 # Input parameters
-Nx = 500
+Nx = 250
 
 #defining space & time variables
-Nt = Nx
 xmin = -5
 xmax = 5
+Nt = 250
 tmin = 0
 tmax = 60
 
@@ -105,8 +105,23 @@ for t in t_array:
 """
 Creates a Data file
 """
-df = pd.DataFrame({'x': x_array, 'psi': psi_list})
-df.to_csv('psi_data.csv')
+
+while True:
+
+    data_input = input("\nWould you like to download a csv file of the data? (y/n)")
+    if data_input == 'y':
+        Nt = Nx
+        df = pd.DataFrame({'x': x_array, 'psi': psi_list})
+        df.to_csv('psi_data.csv')
+        print("\nData has been downloaded.")
+        break
+    elif data_input ==  'n':
+        print("\nNo download chosen. ")
+        break   
+    else:
+        print("\nInvalid response.")
+        print("Please enter... y (yes for download) or n (no download).")
+
 
 
 """
